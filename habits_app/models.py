@@ -1,17 +1,9 @@
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.conf import settings
+from django.db.models.query_utils import Q
 
 NULLABLE = {'blank': True, 'null': True}
-PERIOD = (
-    ('Каждый день', 1),
-    ('Через день', 2),
-    ('Через два дня', 3),
-    ('Через три дня', 4),
-    ('Через четыре дня', 5),
-    ('Через пять дней', 6),
-    ('Раз в неделю', 7),
-)
 
 
 class Habit(models.Model):
@@ -24,9 +16,9 @@ class Habit(models.Model):
     associated_with = models.OneToOneField('Habit', on_delete=models.CASCADE,
                                            verbose_name='Связанная приятная привычка', **NULLABLE,
                                            related_name='pleasant')
-    periodicity = models.PositiveSmallIntegerField(default=1, verbose_name='Периодичность',
+    periodicity = models.PositiveSmallIntegerField(default=1, verbose_name='Повторять каждый <номер> день',
                                                    validators=(MinValueValidator(1), MaxValueValidator(7)))
-    reward = models.CharField(max_length=500, verbose_name='Вознаграждение')
+    reward = models.CharField(max_length=500, verbose_name='Вознаграждение', **NULLABLE)
     execution_time = models.PositiveSmallIntegerField(default=120, verbose_name='Время на исполнение привычки, сек',
                                                       validators=(MaxValueValidator(120),))
     is_public = models.BooleanField(default=False, verbose_name='Открыта для всех')
@@ -34,6 +26,27 @@ class Habit(models.Model):
     class Meta:
         verbose_name = 'Привычка'
         verbose_name_plural = 'Привычки'
+        constraints = [
+            models.CheckConstraint(
+                check=
+                Q(
+                    is_pleasant=True,
+                    reward__isnull=True,
+                    associated_with__isnull=True
+                )
+                |
+                Q(
+                    is_pleasant=False,
+                    reward__isnull=True,
+                    associated_with__isnull=False
 
-    def clean(self):
-        pass
+                )
+                |
+                Q(
+                    is_pleasant=False,
+                    reward__isnull=False,
+                    associated_with__isnull=True
+                ),
+                name='is_pleasant_or_reward_or_associated'
+            )
+        ]
