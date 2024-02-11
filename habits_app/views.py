@@ -1,4 +1,5 @@
 from django.db.models.query_utils import Q
+from rest_framework.exceptions import ValidationError
 from rest_framework.generics import CreateAPIView, ListAPIView, RetrieveAPIView, UpdateAPIView, DestroyAPIView
 from habits_app.serializers import (HealthHabitRewardSerializer, HealthWithPleasantHabitCreateSerializer,
                                     HealthWithPleasantHabitSerializer, PleasantHabitSerializer)
@@ -93,12 +94,12 @@ class HabitRetrieveAPIView(RetrieveAPIView):
 
     def get_object(self):
         obj = super().get_object()
-        if obj.associated_with is None and not obj.is_pleasant:
+        if obj.is_pleasant:
+            self.serializer_class = PleasantHabitSerializer
+        elif obj.associated_with is None and not obj.is_pleasant:
             self.serializer_class = HealthHabitRewardSerializer
         elif obj.associated_with:
             self.serializer_class = HealthWithPleasantHabitSerializer
-        elif obj.is_pleasant:
-            self.serializer_class = PleasantHabitSerializer
         return obj
 
 
@@ -111,7 +112,7 @@ class HabitUpdateAPIView(UpdateAPIView):
         if obj.associated_with is None and not obj.is_pleasant:
             self.serializer_class = HealthHabitRewardSerializer
         elif obj.associated_with:
-            self.serializer_class = HealthWithPleasantHabitSerializer
+            self.serializer_class = HealthWithPleasantHabitCreateSerializer
         elif obj.is_pleasant:
             self.serializer_class = PleasantHabitSerializer
         return obj

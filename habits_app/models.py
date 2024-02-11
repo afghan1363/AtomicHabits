@@ -23,6 +23,9 @@ class Habit(models.Model):
                                                       validators=(MaxValueValidator(120),))
     is_public = models.BooleanField(default=False, verbose_name='Открыта для всех')
 
+    def __str__(self):
+        return f'{self.action} - приятная' if self.is_pleasant else f'{self.action} - полезная'
+
     class Meta:
         verbose_name = 'Привычка'
         verbose_name_plural = 'Привычки'

@@ -12,5 +12,6 @@ urlpatterns = [
     path('pleasant/create/', PleasantHabitCreateAPIView.as_view(), name='create_pleasant_habit'),
     path('pleasant/list/', PleasantHabitListAPIView.as_view(), name='pleasant_habits'),
     path('habit/<int:pk>/retrieve/', HabitRetrieveAPIView.as_view(), name='retrieve_habits'),
+    path('habit/<int:pk>/update/', HabitUpdateAPIView.as_view(), name='update_habits'),
     path('habit/<int:pk>/destroy/', HabitDestroyAPIView.as_view(), name='destroy_habits'),
 ]
