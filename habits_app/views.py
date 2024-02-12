@@ -1,5 +1,4 @@
 from django.db.models.query_utils import Q
-from rest_framework.exceptions import ValidationError
 from rest_framework.generics import CreateAPIView, ListAPIView, RetrieveAPIView, UpdateAPIView, DestroyAPIView
 from habits_app.serializers import (HealthHabitRewardSerializer, HealthWithPleasantHabitCreateSerializer,
                                     HealthWithPleasantHabitSerializer, PleasantHabitSerializer)
