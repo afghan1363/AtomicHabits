@@ -13,3 +13,10 @@ class IsPublicItem(BasePermission):
 
     def has_object_permission(self, request, view, obj):
         return obj.is_public
+
+
+class IsOwner(BasePermission):
+    message = 'Только для создателя записи'
+
+    def has_permission(self, request, view):
+        return request.user == view.get_object().user

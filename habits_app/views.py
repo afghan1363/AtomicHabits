@@ -1,41 +1,13 @@
-from django.db.models.query_utils import Q
 from rest_framework.generics import CreateAPIView, ListAPIView, RetrieveAPIView, UpdateAPIView, DestroyAPIView
-from habits_app.serializers import (HealthHabitRewardSerializer, HealthWithPleasantHabitCreateSerializer,
-                                    HealthWithPleasantHabitSerializer, PleasantHabitSerializer)
+from habits_app.serializers import (HealthWithPleasantHabitCreateSerializer, HabitSerializer)
 from rest_framework.permissions import IsAuthenticated
-from habits_app.permissions import IsAutor, IsPublicItem
+from habits_app.permissions import IsAutor, IsPublicItem, IsOwner
 from habits_app.models import Habit
 
 
-class HealthHabitWithRewardCreateAPIView(CreateAPIView):
+class HabitCreateAPIView(CreateAPIView):
     """
-    Представление создания полезной привычки с вознаграждением
-    """
-    serializer_class = HealthHabitRewardSerializer
-    permission_classes = (IsAuthenticated,)
-
-    def perform_create(self, serializer):
-        new_habit = serializer.save()
-        new_habit.user = self.request.user
-        new_habit.save()
-
-
-class HealthHabitWithRewardListAPIView(ListAPIView):
-    serializer_class = HealthHabitRewardSerializer
-    permission_classes = (IsAuthenticated,)
-
-    def get_queryset(self):
-        return Habit.objects.filter(
-            Q(associated_with=None, is_pleasant=False, user=self.request.user)
-            |
-            Q(associated_with=None, is_pleasant=False, is_public=True)
-        )
-
-
-class HealthHabitWithPleasantCreateAPIView(CreateAPIView):
-    """
-    Представление создания полезной привычки с приятной привычкой.
-    Признак публичности приятной привычки такой же, как и у полезной привычки.
+    Представление создания привычки
     """
     serializer_class = HealthWithPleasantHabitCreateSerializer
     permission_classes = (IsAuthenticated,)
@@ -43,80 +15,49 @@ class HealthHabitWithPleasantCreateAPIView(CreateAPIView):
     def perform_create(self, serializer):
         new_habit = serializer.save()
         new_habit.user = self.request.user
-        new_habit.associated_with.user = new_habit.user
-        new_habit.associated_with.is_public = new_habit.is_public
-        new_habit.save()
-        new_habit.associated_with.save()
+        if new_habit.associated_with:
+            new_habit.associated_with.user = new_habit.user
+            new_habit.associated_with.is_public = new_habit.is_public
+            new_habit.save()
+            new_habit.associated_with.save()
+        else:
+            new_habit.save()
 
 
-class HealthHabitWithPleasantListAPIView(ListAPIView):
-    serializer_class = HealthWithPleasantHabitSerializer
+class SelfHabitListAPIView(ListAPIView):
+    """
+    Вывод списка своих привычек
+    """
+    serializer_class = HabitSerializer
+    permission_classes = (IsAuthenticated, IsOwner)
+
+    def get_queryset(self):
+        return Habit.objects.filter(user=self.request.user)
+
+
+class PublicHabitListAPIView(ListAPIView):
+    """
+    Вывод списка опубликованных привычек других пользователей
+    """
+    serializer_class = HabitSerializer
     permission_classes = (IsAuthenticated,)
 
     def get_queryset(self):
-        return Habit.objects.filter(
-            Q(associated_with__isnull=False, user=self.request.user)
-            |
-            Q(associated_with__isnull=False, is_public=True)
-        )
-
-
-class PleasantHabitCreateAPIView(CreateAPIView):
-    """
-    Представление создания приятной привычки
-    """
-    serializer_class = PleasantHabitSerializer
-    permission_classes = (IsAuthenticated,)
-
-    def perform_create(self, serializer):
-        new_habit = serializer.save()
-        new_habit.user = self.request.user
-        new_habit.is_pleasant = True
-        new_habit.save()
-
-
-class PleasantHabitListAPIView(ListAPIView):
-    serializer_class = PleasantHabitSerializer
-    permission_classes = (IsAuthenticated,)
-
-    def get_queryset(self):
-        return Habit.objects.filter(
-            Q(is_pleasant=True, user=self.request.user)
-            |
-            Q(is_pleasant=True, is_public=True)
-        )
+        return Habit.objects.filter(is_public=True)
 
 
 class HabitRetrieveAPIView(RetrieveAPIView):
     queryset = Habit.objects.all()
+    serializer_class = HabitSerializer
     permission_classes = (IsAuthenticated, IsAutor | IsPublicItem,)
-
-    def get_object(self):
-        obj = super().get_object()
-        if obj.is_pleasant:
-            self.serializer_class = PleasantHabitSerializer
-        elif obj.associated_with is None and not obj.is_pleasant:
-            self.serializer_class = HealthHabitRewardSerializer
-        elif obj.associated_with:
-            self.serializer_class = HealthWithPleasantHabitSerializer
-        return obj
 
 
 class HabitUpdateAPIView(UpdateAPIView):
     queryset = Habit.objects.all()
-    permission_classes = (IsAuthenticated, IsAutor,)
-
-    def get_object(self):
-        obj = super().get_object()
-        if obj.associated_with is None and not obj.is_pleasant:
-            self.serializer_class = HealthHabitRewardSerializer
-        elif obj.associated_with:
-            self.serializer_class = HealthWithPleasantHabitCreateSerializer
-        elif obj.is_pleasant:
-            self.serializer_class = PleasantHabitSerializer
-        return obj
+    permission_classes = (IsAuthenticated, IsOwner,)
+    serializer_class = HealthWithPleasantHabitCreateSerializer
 
 
 class HabitDestroyAPIView(DestroyAPIView):
     queryset = Habit.objects.all()
-    permission_classes = (IsAuthenticated, IsAutor)
+    permission_classes = (IsAuthenticated, IsOwner)

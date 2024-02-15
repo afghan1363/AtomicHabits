@@ -29,27 +29,27 @@ class Habit(models.Model):
     class Meta:
         verbose_name = 'Привычка'
         verbose_name_plural = 'Привычки'
-        constraints = [
-            models.CheckConstraint(
-                check=
-                Q(
-                    is_pleasant=True,
-                    reward__isnull=True,
-                    associated_with__isnull=True
-                )
-                |
-                Q(
-                    is_pleasant=False,
-                    reward__isnull=True,
-                    associated_with__isnull=False
-
-                )
-                |
-                Q(
-                    is_pleasant=False,
-                    reward__isnull=False,
-                    associated_with__isnull=True
-                ),
-                name='is_pleasant_or_reward_or_associated'
-            )
-        ]
+        # constraints = [
+        #     models.CheckConstraint(
+        #         check=
+        #         Q(
+        #             is_pleasant=True,
+        #             reward__isnull=True,
+        #             associated_with__isnull=True
+        #         )
+        #         |
+        #         Q(
+        #             is_pleasant=False,
+        #             reward__isnull=True,
+        #             associated_with__isnull=False
+        #
+        #         )
+        #         |
+        #         Q(
+        #             is_pleasant=False,
+        #             reward__isnull=False,
+        #             associated_with__isnull=True
+        #         ),
+        #         name='is_pleasant_or_reward_or_associated'
+        #     )
+        # ]
