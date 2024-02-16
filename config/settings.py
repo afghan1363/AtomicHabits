@@ -45,11 +45,14 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_simplejwt',
     'django_filters',
+    'corsheaders',
+    'drf_yasg',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -155,9 +158,6 @@ SIMPLE_JWT = {
 
 TELEGRAM_TOKEN = os.getenv('TELEGRAM_TOKEN')
 
-# CRONJOBS = [
-#     ('59 23 */1 * *', 'newsletter_app.cron.send_newsletter_job')
-# ]
 
 # URL-адрес брокера сообщений
 CELERY_BROKER_URL = 'redis://localhost:6379'
@@ -183,11 +183,12 @@ CELERY_BEAT_SCHEDULE = {
 }
 
 
-# CORS_ALLOWED_ORIGINS = [
-#     os.getenv('FRONTEND_URL'),
-#     os.getenv('BACKEND_URL'),
-# ]
-#
-# CSRF_TRUSTED_ORIGINS = [
-#     os.getenv('BACKEND_URL'),
-# ]
+CORS_ALLOWED_ORIGINS = [
+    "http://127.0.0.1:8000",
+    "https://read-only.example.com",
+    "https://read-and-write.example.com",
+]
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://read-and-write.example.com",
+]

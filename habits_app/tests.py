@@ -33,7 +33,7 @@ class HabitTestCase(APITestCase):
         self.assertEqual(
             response.json(),
             {'id': response.json()['id'], 'associated_with': None, 'place': 'place_test',
-             'action_time': '2024-02-14 12:30:00',
+             'action_time': '2024-02-14 12:30',
              'action': 'action_test', 'is_pleasant': False, 'periodicity': 7, 'reward': 'reward_test',
              'execution_time': 100, 'is_public': False, 'user': self.user.pk}
         )
@@ -45,7 +45,7 @@ class HabitTestCase(APITestCase):
         """
         data = {
             'place': 'place_test',
-            'action_time': '2024-02-14 12:30:00',
+            'action_time': '2024-02-14 12:30',
             'action': 'action_test',
             'is_pleasant': True,
             'reward': 'test_reward',
@@ -72,12 +72,11 @@ class HabitTestCase(APITestCase):
             "associated_with": {
                 "place": "In Cafe UPD2",
                 "action": "Drink a orange and green apple fresh",
-                "periodicity": 2,
                 "execution_time": 30,
                 "is_public": True,
             },
             "place": "In Park UPD2",
-            "action_time": "2024-02-01 15:00:00",
+            "action_time": "2024-02-01 15:00",
             "action": "Run and fast walk",
             "periodicity": 2,
             "execution_time": 120,
@@ -94,7 +93,7 @@ class HabitTestCase(APITestCase):
                               'action': 'Drink a orange and green apple fresh',
                               'periodicity': 2, 'execution_time': 30, 'is_public': True,
                               'user': response.json()['user']}, 'place': 'In Park UPD2',
-                          'action_time': '2024-02-01 15:00:00', 'action': 'Run and fast walk', 'is_pleasant': False,
+                          'action_time': '2024-02-01 15:00', 'action': 'Run and fast walk', 'is_pleasant': False,
                           'periodicity': 2, 'reward': None, 'execution_time': 120, 'is_public': True,
                           'user': response.json()['user']}
 
@@ -109,12 +108,11 @@ class HabitTestCase(APITestCase):
                 "is_pleasant": False,
                 "place": "In Cafe UPD2",
                 "action": "Drink a orange and green apple fresh",
-                "periodicity": 2,
                 "execution_time": 30,
                 "is_public": True,
             },
             "place": "In Park UPD2",
-            "action_time": "2024-02-01 15:00:00",
+            "action_time": "2024-02-01 15:00",
             "action": "Run and fast walk",
             "periodicity": 2,
             "execution_time": 120,
@@ -137,12 +135,11 @@ class HabitTestCase(APITestCase):
             "associated_with": {
                 "place": "In Cafe ",
                 "action": "Drink a orange and green apple fresh",
-                "periodicity": 2,
                 "execution_time": 30,
                 "is_public": True,
             },
             "place": "In Park ",
-            "action_time": "2024-02-01 15:00:00",
+            "action_time": "2024-02-01 15:00",
             "action": "Run and fast walk",
             "periodicity": 2,
             "execution_time": 120,
@@ -152,12 +149,11 @@ class HabitTestCase(APITestCase):
             'is_pleasant': True,
             'place': 'In Cafe UPD2',
             'action': 'Drink a orange and green apple fresh',
-            'periodicity': 2,
             'execution_time': 30,
             'is_public': True
         },
             'place': 'In Park UPD2',
-            'action_time': '2024-02-01 15:00:00',
+            'action_time': '2024-02-01 15:00',
             'action': 'Run and fast walk',
             'is_pleasant': False,
             'periodicity': 2,
@@ -177,7 +173,7 @@ class HabitTestCase(APITestCase):
                                                                'periodicity': 2, 'execution_time': 30,
                                                                'is_public': True, 'user': posted.json()['user']},
                                            'place': 'In Park UPD2',
-                                           'action_time': '2024-02-01 15:00:00', 'action': 'Run and fast walk',
+                                           'action_time': '2024-02-01 15:00', 'action': 'Run and fast walk',
                                            'is_pleasant': False, 'periodicity': 2, 'reward': None,
                                            'execution_time': 120, 'is_public': True, 'user': posted.json()['user']}
                          )
@@ -190,12 +186,11 @@ class HabitTestCase(APITestCase):
             "associated_with": {
                 "place": "In Cafe ",
                 "action": "Drink a orange and green apple fresh",
-                "periodicity": 2,
                 "execution_time": 30,
                 "is_public": True,
             },
             "place": "In Park ",
-            "action_time": "2024-02-01 15:00:00",
+            "action_time": "2024-02-01 15:00",
             "action": "Run and fast walk",
             "periodicity": 2,
             "execution_time": 120,

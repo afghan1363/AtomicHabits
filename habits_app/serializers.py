@@ -8,6 +8,7 @@ class PleasantHabitSerializer(ModelSerializer):
     Сериализатор приятной привычки
     """
     is_pleasant = BooleanField(default=True)
+    periodicity = IntegerField(read_only=True)
 
     class Meta:
         model = Habit
@@ -44,7 +45,8 @@ class HealthWithPleasantHabitCreateSerializer(ModelSerializer):
     def create(self, validated_data):
         associated_with = validated_data.pop('associated_with', None)
         if associated_with:
-            pleasant_habit = Habit.objects.create(**associated_with, user=validated_data.get('user'))
+            pleasant_habit = Habit.objects.create(**associated_with, user=validated_data.get('user'),
+                                                  periodicity=validated_data.get('periodicity'))
             healthy_habit_item = Habit.objects.create(**validated_data, associated_with=pleasant_habit)
         else:
             healthy_habit_item = Habit.objects.create(**validated_data)

@@ -13,7 +13,7 @@ class Habit(models.Model):
     action_time = models.DateTimeField(verbose_name='Время действия', **NULLABLE)
     action = models.CharField(max_length=1000, verbose_name='Действие')
     is_pleasant = models.BooleanField(default=False, verbose_name='Приятная привычка')
-    associated_with = models.OneToOneField('Habit', on_delete=models.CASCADE,
+    associated_with = models.OneToOneField('Habit', on_delete=models.SET_NULL,
                                            verbose_name='Связанная приятная привычка', **NULLABLE,
                                            related_name='pleasant')
     periodicity = models.PositiveSmallIntegerField(default=1, verbose_name='Повторять каждый <номер> день',
