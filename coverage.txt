@@ -1,0 +1,48 @@
+Name                                                                             Stmts   Miss  Cover   Missing
+--------------------------------------------------------------------------------------------------------------
+config/__init__.py                                                                   2      0   100%
+config/asgi.py                                                                       4      4     0%   10-16
+config/celery.py                                                                     6      0   100%
+config/settings.py                                                                  35      0   100%
+config/urls.py                                                                       7      0   100%
+config/wsgi.py                                                                       4      4     0%   10-16
+habits_app/__init__.py                                                               0      0   100%
+habits_app/admin.py                                                                  1      0   100%
+habits_app/apps.py                                                                   4      0   100%
+habits_app/migrations/0001_initial.py                                                7      0   100%
+habits_app/migrations/0002_initial.py                                                7      0   100%
+habits_app/migrations/0003_alter_habit_associated_with.py                            5      0   100%
+habits_app/migrations/0004_alter_habit_periodicity.py                                5      0   100%
+habits_app/migrations/0005_alter_habit_periodicity.py                                5      0   100%
+habits_app/migrations/0006_alter_habit_periodicity_alter_habit_reward.py             5      0   100%
+habits_app/migrations/0007_habit_is_pleasant_or_reward_or_associated.py              5      0   100%
+habits_app/migrations/0008_alter_habit_associated_with.py                            5      0   100%
+habits_app/migrations/0009_remove_habit_is_pleasant_or_reward_or_associated.py       4      0   100%
+habits_app/migrations/0010_alter_habit_associated_with.py                            5      0   100%
+habits_app/migrations/0011_alter_habit_action_time.py                                4      0   100%
+habits_app/migrations/0012_alter_habit_associated_with.py                            5      0   100%
+habits_app/migrations/__init__.py                                                    0      0   100%
+habits_app/models.py                                                                21      1    95%   27
+habits_app/paginators.py                                                             3      0   100%
+habits_app/permissions.py                                                           13      1    92%   15
+habits_app/serializers.py                                                           41      2    95%   19-20
+habits_app/services.py                                                               7      7     0%   1-10
+habits_app/tasks.py                                                                 22     22     0%   1-33
+habits_app/tests.py                                                                 47      0   100%
+habits_app/urls.py                                                                   5      0   100%
+habits_app/validators.py                                                            27      5    81%   12-13, 15, 20, 34
+habits_app/views.py                                                                 53      3    94%   39, 51, 81
+manage.py                                                                           12      2    83%   12-13
+users/__init__.py                                                                    0      0   100%
+users/admin.py                                                                       1      0   100%
+users/apps.py                                                                        4      0   100%
+users/migrations/0001_initial.py                                                     7      0   100%
+users/migrations/0002_user_chat_id.py                                                4      0   100%
+users/migrations/__init__.py                                                         0      0   100%
+users/models.py                                                                     11      0   100%
+users/serializers.py                                                                13      4    69%   13-18
+users/tests.py                                                                       1      0   100%
+users/urls.py                                                                        5      0   100%
+users/views.py                                                                       4      0   100%
+--------------------------------------------------------------------------------------------------------------
+TOTAL                                                                              426     55    87%
