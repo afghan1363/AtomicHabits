@@ -3,6 +3,9 @@ from users.models import User
 
 
 class Command(BaseCommand):
+    """
+    Создание суперпользователя
+    """
     def handle(self, *args, **options):
         email = input('email: ')
         chat_id = input('chat_id: ')

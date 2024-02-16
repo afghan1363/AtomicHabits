@@ -1,7 +1,6 @@
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.conf import settings
-from django.db.models.query_utils import Q
 
 NULLABLE = {'blank': True, 'null': True}
 

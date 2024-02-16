@@ -52,28 +52,29 @@ class PublicHabitListAPIView(ListAPIView):
 
 
 class HabitRetrieveAPIView(RetrieveAPIView):
+    """
+    Просмотр привычки
+    """
     queryset = Habit.objects.all()
     serializer_class = HabitSerializer
     permission_classes = (IsAuthenticated, IsAutor | IsPublicItem,)
 
 
 class HabitUpdateAPIView(UpdateAPIView):
+    """
+    Редактирование привычки
+    """
     queryset = Habit.objects.all()
     permission_classes = (IsAuthenticated, IsOwner,)
     serializer_class = HealthWithPleasantHabitCreateSerializer
 
 
 class HabitDestroyAPIView(DestroyAPIView):
+    """
+    Удаление привычки
+    """
     queryset = Habit.objects.all()
     permission_classes = (IsAuthenticated, IsAutor)
-
-    # def get_object(self):
-    #     obj = super().get_object()
-    #     if not obj.action_time:
-    #         print(f"FROM DELETE {hasattr(obj, 'pleasant')}")
-    #     if obj.associated_with:
-    #         obj.associated_with.delete()
-    #     return obj
 
     def destroy(self, request, *args, **kwargs):
         instance = self.get_object()

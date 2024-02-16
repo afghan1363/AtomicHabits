@@ -3,6 +3,9 @@ import requests
 
 
 class TgBot:
+    """
+    Класс для отправки сообщений в Телеграм бот
+    """
     URL = 'https://api.telegram.org/bot'  # + <token>/METHOD_NAME
     TOKEN = settings.TELEGRAM_TOKEN
 

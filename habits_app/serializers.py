@@ -33,7 +33,7 @@ class HabitSerializer(ModelSerializer):
 
 class HealthWithPleasantHabitCreateSerializer(ModelSerializer):
     """
-    Сериализатор создания полезной привычки со связанной с нею приятной привычкой
+    Сериализатор создания и редактирования полезной привычки со связанной с нею приятной привычкой
     """
     associated_with = PleasantHabitSerializer(allow_null=True, default=None)
 

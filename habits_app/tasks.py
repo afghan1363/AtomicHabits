@@ -1,4 +1,4 @@
-from habits_app.servises import TgBot
+from habits_app.services import TgBot
 from celery import shared_task
 from datetime import datetime, timedelta, timezone
 from habits_app.models import Habit
@@ -6,6 +6,9 @@ from habits_app.models import Habit
 
 @shared_task
 def message_habit():
+    """
+    Функция подготовки и отправки сообщений в ТГ-бот
+    """
     bot = TgBot()
     now = datetime.now(tz=timezone.utc)
     habits = Habit.objects.filter(action_time__lte=now)

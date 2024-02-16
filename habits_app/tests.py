@@ -28,7 +28,6 @@ class HabitTestCase(APITestCase):
             reverse('habits_app:create_habit'),
             data=data
         )
-        print(f'Test_create_habit: {response.json()}')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(
             response.json(),
@@ -57,7 +56,6 @@ class HabitTestCase(APITestCase):
             reverse('habits_app:create_habit'),
             data=data
         )
-        print(f'Create wrong habit: {response.json()}')
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertEqual(
             response.json(),
@@ -83,7 +81,6 @@ class HabitTestCase(APITestCase):
             "is_public": True,
         }
         response = self.client.post(reverse('habits_app:create_habit'), data, format='json')
-        print(f'Create health with pleasant habits {response.json()}')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(response.json(),
                          {'id': response.json()['id'],
@@ -119,7 +116,6 @@ class HabitTestCase(APITestCase):
             "is_public": True,
         }
         response = self.client.post(reverse('habits_app:create_habit'), data, format='json')
-        print(f'Create habit with wrong pleasant habit: {response.json()}')
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertEqual(
             response.json(),
@@ -162,10 +158,8 @@ class HabitTestCase(APITestCase):
             'is_public': True}
 
         posted = self.client.post(reverse('habits_app:create_habit'), data, format='json')
-        print(f'POSTED {posted.json()}')
         response = self.client.patch(reverse('habits_app:update_habit', kwargs={'pk': posted.json()['id']}),
                                      data_upd, format='json')
-        print(f'Test updating habit: {response.json()}')
         self.assertEqual(response.json(), {'id': posted.json()['id'],
                                            'associated_with': {'id': posted.json()['associated_with']['id'],
                                                                'is_pleasant': True, 'place': 'In Cafe UPD2',
