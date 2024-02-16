@@ -143,7 +143,7 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
-    'DATETIME_FORMAT': "%Y-%m-%d %H:%M:%S",
+    'DATETIME_FORMAT': "%Y-%m-%d %H:%M",
     'DEFAULT_FILTER_BACKENDS': (
         'django_filters.rest_framework.DjangoFilterBackend',)
 }
@@ -173,3 +173,21 @@ CELERY_TASK_TRACK_STARTED = True
 
 # Максимальное время на выполнение задачи
 CELERY_TASK_TIME_LIMIT = 30 * 60
+
+
+CELERY_BEAT_SCHEDULE = {
+    'task-name': {
+        'task': 'habits_app.tasks.message_habit',
+        'schedule': timedelta(minutes=1)
+    }
+}
+
+
+# CORS_ALLOWED_ORIGINS = [
+#     os.getenv('FRONTEND_URL'),
+#     os.getenv('BACKEND_URL'),
+# ]
+#
+# CSRF_TRUSTED_ORIGINS = [
+#     os.getenv('BACKEND_URL'),
+# ]
