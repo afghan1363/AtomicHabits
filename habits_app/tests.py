@@ -71,7 +71,6 @@ class HabitTestCase(APITestCase):
         data = {
             "associated_with": {
                 "place": "In Cafe UPD2",
-                "action_time": "2024-02-11 15:20:00",
                 "action": "Drink a orange and green apple fresh",
                 "periodicity": 2,
                 "execution_time": 30,
@@ -92,7 +91,6 @@ class HabitTestCase(APITestCase):
                           'associated_with': {
                               'id': response.json()['associated_with']['id'], 'is_pleasant': True,
                               'place': 'In Cafe UPD2',
-                              'action_time': '2024-02-11 15:20:00',
                               'action': 'Drink a orange and green apple fresh',
                               'periodicity': 2, 'execution_time': 30, 'is_public': True,
                               'user': response.json()['user']}, 'place': 'In Park UPD2',
@@ -110,7 +108,6 @@ class HabitTestCase(APITestCase):
             "associated_with": {
                 "is_pleasant": False,
                 "place": "In Cafe UPD2",
-                "action_time": "2024-02-11 15:20:00",
                 "action": "Drink a orange and green apple fresh",
                 "periodicity": 2,
                 "execution_time": 30,
@@ -139,7 +136,6 @@ class HabitTestCase(APITestCase):
         data = {
             "associated_with": {
                 "place": "In Cafe ",
-                "action_time": "2024-02-11 15:20:00",
                 "action": "Drink a orange and green apple fresh",
                 "periodicity": 2,
                 "execution_time": 30,
@@ -155,7 +151,6 @@ class HabitTestCase(APITestCase):
         data_upd = {'associated_with': {
             'is_pleasant': True,
             'place': 'In Cafe UPD2',
-            'action_time': '2024-02-11 15:20:00',
             'action': 'Drink a orange and green apple fresh',
             'periodicity': 2,
             'execution_time': 30,
@@ -178,7 +173,6 @@ class HabitTestCase(APITestCase):
         self.assertEqual(response.json(), {'id': posted.json()['id'],
                                            'associated_with': {'id': posted.json()['associated_with']['id'],
                                                                'is_pleasant': True, 'place': 'In Cafe UPD2',
-                                                               'action_time': '2024-02-11 15:20:00',
                                                                'action': 'Drink a orange and green apple fresh',
                                                                'periodicity': 2, 'execution_time': 30,
                                                                'is_public': True, 'user': posted.json()['user']},
@@ -195,7 +189,6 @@ class HabitTestCase(APITestCase):
         data = {
             "associated_with": {
                 "place": "In Cafe ",
-                "action_time": "2024-02-11 15:20:00",
                 "action": "Drink a orange and green apple fresh",
                 "periodicity": 2,
                 "execution_time": 30,

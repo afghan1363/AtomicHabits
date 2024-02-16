@@ -11,7 +11,7 @@ class PleasantHabitSerializer(ModelSerializer):
 
     class Meta:
         model = Habit
-        exclude = ('reward', 'associated_with',)
+        exclude = ('action_time', 'reward', 'associated_with',)
         validators = (ValidPost(fields=exclude),)
 
     def create(self, validated_data):
