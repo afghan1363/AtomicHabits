@@ -12,6 +12,7 @@ class UserSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         user = User.objects.create(
             email=validated_data['email'],
+            chat_id=validated_data['chat_id']
         )
         user.set_password(validated_data['password'])
         user.save()
@@ -19,4 +20,4 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('id', 'email', 'password',)
+        fields = ('id', 'email', 'password', 'chat_id')

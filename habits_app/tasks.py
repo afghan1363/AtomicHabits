@@ -10,7 +10,7 @@ def message_habit():
     Функция подготовки и отправки сообщений в ТГ-бот
     """
     bot = TgBot()
-    now = datetime.now(tz=timezone.utc)
+    now = datetime.now()
     habits = Habit.objects.filter(action_time__lte=now)
     if habits:
         for habit in habits:
@@ -29,6 +29,7 @@ def message_habit():
 
             try:
                 bot.send_message(chat_id=habit.user.chat_id, text=text)
+                print(habit.user.chat_id)
                 habit.action_time += timedelta(days=int(habit.periodicity))
             except Exception as err:
                 print(err)
