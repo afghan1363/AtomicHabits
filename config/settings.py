@@ -164,10 +164,10 @@ SIMPLE_JWT = {
 TELEGRAM_TOKEN = os.getenv('TELEGRAM_TOKEN')
 
 # URL-адрес брокера сообщений
-CELERY_BROKER_URL = 'redis://redis:6379'  # 'redis://localhost:6379'
+CELERY_BROKER_URL = os.getenv('REDIS_LOCATION')  # 'redis://localhost:6379'
 
 # URL-адрес брокера результатов, также Redis
-CELERY_RESULT_BACKEND = 'redis://redis:6379'  # 'redis://localhost:6379'
+CELERY_RESULT_BACKEND = os.getenv('REDIS_LOCATION')  # 'redis://localhost:6379'
 
 # Часовой пояс для работы Celery
 CELERY_TIMEZONE = 'Asia/Yekaterinburg'
