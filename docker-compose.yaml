@@ -14,8 +14,10 @@ services:
     tty: true
     command: celery -A config beat -l INFO -S django
     depends_on:
-      - redis
-      - app
+      app:
+        condition: service_healthy
+      redis:
+        condition: service_started
 
   redis:
     image: redis
@@ -43,6 +45,11 @@ services:
       sh -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
     ports:
       - '8001:8000'
+    healthcheck:
+      test: "curl --fail http://127.0.0.1:8000/swagger/"
+      interval: 5s
+      timeout: 5s
+      retries: 3
     env_file:
       - .env
     volumes:
