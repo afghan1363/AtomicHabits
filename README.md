@@ -13,6 +13,7 @@
 ### Активировать виртуальное окружение
     source env/bin/activate.bat
 ### Установить зависимости 
+### В проекте используется пакет psycopg2, если нужно, замените его в requirements.txt на psycopg2-binary
     pip3 install -r requirements.txt
 ### Создать файл 
     .env
